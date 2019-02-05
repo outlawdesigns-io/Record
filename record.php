@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/Db/db.php';
-require_once __DIR__ . '/recordInterface.php';
+require_once __DIR__ . '/RecordInterface.php';
 
 if(!isset($GLOBALS['db'])){
     $db = new \DB();
