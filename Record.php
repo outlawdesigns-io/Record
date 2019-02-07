@@ -44,6 +44,7 @@ abstract class Record implements RecordBehavior{
     }
     protected function _buildId(){
         $results = $GLOBALS['db']
+            ->database($this->database)
             ->table($this->table)
             ->select("$this->primaryKey")
             ->orderBy("$this->primaryKey desc limit 1")
