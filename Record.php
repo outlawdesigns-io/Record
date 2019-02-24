@@ -37,7 +37,11 @@ abstract class Record implements RecordBehavior{
         }
         while($row = mysqli_fetch_assoc($results)){
             foreach($row as $key=>$value){
-                $this->$key = $value;
+                if(is_array($this->$key)){
+                  $this->$key = $this->_toArray($value);
+                }else{
+                  $this->$key = $value;
+                }
             }
         }
         return $this;
@@ -54,6 +58,12 @@ abstract class Record implements RecordBehavior{
         }
         return $this;
     }
+    protected function _toArray($string){
+      return explode(',',$string);
+    }
+    protected function _toString($array){
+      return implode(',',$array);
+    }
     public function create(){
         $reflection = new \ReflectionObject($this);
         $data = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
@@ -62,6 +72,8 @@ abstract class Record implements RecordBehavior{
             $key = $obj->name;
             if($key == 'created_date' || $key == 'updated_date'){
                 $upData[$key] = date("m/d/Y H:i:s");
+            }elseif(is_array($this->$key)){
+                $upData[$key] = $this->_toString($value);
             }elseif(!is_null($this->$key) && !empty($this->$key)){
                 $upData[$key] = $this->$key;
             }
@@ -83,6 +95,8 @@ abstract class Record implements RecordBehavior{
             $key = $obj->name;
             if($key == 'updated_date'){
                 $upData[$key] = date("m/d/Y H:i:s");
+            }elseif(is_array($this->$key)){
+                $upData[$key] = $this->_toString($value);
             }elseif(!is_null($this->$key) && !empty($this->$key)){
                 $upData[$key] = $this->$key;
             }
