@@ -73,7 +73,7 @@ abstract class Record implements RecordBehavior{
             if($key == 'created_date' || $key == 'updated_date'){
                 $upData[$key] = date("m/d/Y H:i:s");
             }elseif(is_array($this->$key) && !empty($this->$key)){
-                $upData[$key] = $this->_toString($value);
+                $upData[$key] = $this->_toString($this->$key);
             }elseif(!is_null($this->$key) && !empty($this->$key)){
                 $upData[$key] = $this->$key;
             }
@@ -96,7 +96,7 @@ abstract class Record implements RecordBehavior{
             if($key == 'updated_date'){
                 $upData[$key] = date("m/d/Y H:i:s");
             }elseif(is_array($this->$key) && !empty($this->$key)){
-                $upData[$key] = $this->_toString($value);
+                $upData[$key] = $this->_toString($this->$key);
             }elseif(!is_null($this->$key) && !empty($this->$key)){
                 $upData[$key] = $this->$key;
             }
