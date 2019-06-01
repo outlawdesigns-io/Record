@@ -64,6 +64,11 @@ abstract class Record implements RecordBehavior{
     protected function _toString($array){
       return implode(',',$array);
     }
+    protected function _cleanString($string){
+      $string = preg_replace("/'/","''",$string);
+      $string = preg_replace("/\\\\/","\\\\\\",$string);
+      return $string;
+    }
     public function create(){
         $reflection = new \ReflectionObject($this);
         $data = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
@@ -75,7 +80,7 @@ abstract class Record implements RecordBehavior{
             }elseif(is_array($this->$key) && !empty($this->$key)){
                 $upData[$key] = $this->_toString($this->$key);
             }elseif(!is_null($this->$key) && !empty($this->$key)){
-                $upData[$key] = $this->$key;
+                $upData[$key] = $this->_cleanString($this->$key);
             }
         }
         unset($upData[$this->primaryKey]);
