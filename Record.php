@@ -195,7 +195,7 @@ abstract class Record implements RecordBehavior{
             ->database($db)
             ->table($table)
             ->select($key . " count(*) as count")
-            ->groupBy($key);
+            ->groupBy($key)
             ->get();
         while($row = mysqli_fetch_assoc($results)){
             $data[] = $row;
