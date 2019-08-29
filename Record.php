@@ -177,4 +177,29 @@ abstract class Record implements RecordBehavior{
         }
         return $data;
     }
+    public static function count($db,$table){
+        $data = array();
+        $results = $GLOBALS['db']
+            ->database($db)
+            ->table($table)
+            ->select("count(*) as count")
+            ->get();
+        while($row = mysqli_fetch_assoc($results)){
+          $data = $row;
+        }
+        return $data;
+    }
+    public static function countOf($db,$table,$key){
+        $data = array();
+        $results = $GLOBALS['db']
+            ->database($db)
+            ->table($table)
+            ->select($key . " count(*) as count")
+            ->groupBy($key);
+            ->get();
+        while($row = mysqli_fetch_assoc($results)){
+            $data[] = $row;
+        }
+        return $data;
+    }
 }
