@@ -64,11 +64,6 @@ abstract class Record implements RecordBehavior{
     protected function _toString($array){
       return implode(',',$array);
     }
-    protected function _cleanString($string){
-      $string = preg_replace("/'/","''",$string);
-      $string = preg_replace("/\\\\/","\\\\\\",$string);
-      return $string;
-    }
     public function create(){
         $reflection = new \ReflectionObject($this);
         $data = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
@@ -78,9 +73,9 @@ abstract class Record implements RecordBehavior{
             if($key == 'created_date' || $key == 'updated_date'){
                 $upData[$key] = date("Y-m-d H:i:s");
             }elseif(is_array($this->$key) && !empty($this->$key)){
-                $upData[$key] = $this->_cleanString($this->_toString($this->$key));
+                $upData[$key] = $this->cleanString($this->_toString($this->$key));
             }elseif(!is_null($this->$key) && !empty($this->$key)){
-                $upData[$key] = $this->_cleanString($this->$key);
+                $upData[$key] = $this->cleanString($this->$key);
             }
         }
         unset($upData[$this->primaryKey]);
@@ -101,9 +96,9 @@ abstract class Record implements RecordBehavior{
             if($key == 'updated_date'){
                 $upData[$key] = date("Y-m-d H:i:s");
             }elseif(is_array($this->$key) && !empty($this->$key)){
-                $upData[$key] = $this->_cleanString($this->_toString($this->$key));
+                $upData[$key] = $this->cleanString($this->_toString($this->$key));
             }elseif(!is_null($this->$key) && !empty($this->$key)){
-                $upData[$key] = $this->_cleanString($this->$key);
+                $upData[$key] = $this->cleanString($this->$key);
             }
         }
         if(isset($upData['created_date'])){
@@ -127,13 +122,18 @@ abstract class Record implements RecordBehavior{
         }
         return $this;
     }
+    public static function cleanString($string){
+      $string = preg_replace("/'/","''",$string);
+      $string = preg_replace("/\\\\/","\\\\\\",$string);
+      return $string;
+    }
     public static function search($db,$table,$primaryKey,$key,$value){
         $data = array();
         $results = $GLOBALS['db']
             ->database($db)
             ->table($table)
             ->select($primaryKey)
-            ->where($key,"like","'%" . $this->_cleanString($value) . "%'")
+            ->where($key,"like","'%" . self::cleanString($value) . "%'")
             ->get();
         while($row = mysqli_fetch_assoc($results)){
             $data[] = $row[$primaryKey];
