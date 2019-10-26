@@ -133,7 +133,7 @@ abstract class Record implements RecordBehavior{
             ->database($db)
             ->table($table)
             ->select($primaryKey)
-            ->where($key,"like","'%" . $value . "%'")
+            ->where($key,"like","'%" . $this->_cleanString($value) . "%'")
             ->get();
         while($row = mysqli_fetch_assoc($results)){
             $data[] = $row[$primaryKey];
