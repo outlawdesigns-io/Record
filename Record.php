@@ -113,6 +113,16 @@ abstract class Record implements RecordBehavior{
             ->put();
         return $this;
     }
+    public function delete(){
+      $key = $this->primaryKey;
+      $results = $GLOBALS['db']
+         ->database($this->database)
+         ->table($this->table)
+         ->delete()
+         ->where($this->primaryKey,"=",$this->$key)
+         ->put();
+      return $this;
+    }
     public function setFields($updateObj){
         if(!is_object($updateObj)){
             throw new Exception('Trying to perform object method on non object.');
