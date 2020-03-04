@@ -27,6 +27,8 @@ $id: The unique identifier of the specific record you would like to construct.
 
 It is important to note that all public property names should correspond to their database column names.
 
+Public arrays will automatically be stored in the Database as comma separated strings.
+
 Private or protected properties can be added and removed as desired.
 
 ```
@@ -69,7 +71,6 @@ $p = new Person($id);
 $p->isAlive = $p->isAlive ? false : true;
 $p->update();
 
-
-
-
 ```
+
+## Static Inherited Methods
