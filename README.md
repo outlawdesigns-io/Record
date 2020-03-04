@@ -1,10 +1,12 @@
 # Record
 
-Record is an extension of <a href="https://github.com/outlawdesigns-io/Db">Db</a>. Db cleans and wraps queries while Record provides an abstract class that can be extend to represent generic database records.
+Record is an extension of <a href="https://github.com/outlawdesigns-io/Db">Db</a>.
+
+Db cleans and wraps queries while Record provides an abstract class that can be extended to represent generic database records.
 
 ## Requirements
 
-While Record is abstract, its constructor should be called in the constructor of all concrete classes.
+While Record is abstract, its constructor should be called in the constructor of all child classes.
 
 Record's constructor accepts 3 required and one optional parameters.
 
@@ -18,7 +20,7 @@ $table: Database Table
 
 $primaryKey: The name of the record's primary key field.
 
-$id: The unique identifier of the specific record you would like to construt.
+$id: The unique identifier of the specific record you would like to construct.
 
 
 ## Usage
