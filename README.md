@@ -90,7 +90,6 @@ $p->delete();
 
 Save object to database.
 
-#### Example
 ```
 /*
 Remember from our example definition that Person's primary key is 'id',
