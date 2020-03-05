@@ -90,7 +90,7 @@ $p->delete();
 
 Save object to database.
 
-### Example
+#### Example
 ```
 /*
 Remember from our example definition that Person's primary key is 'id',
@@ -131,7 +131,7 @@ Static. Escapes apostrophes and back slashes for MySQL.
 
 Static. Performs a basic database search WHERE $key like '%$value%'. Return primary keys of matching records.
 
-### Example
+#### Example
 ```
 $results = Person::search(Person::DB,Person::TABLE,Person::PRIMARYKEY,"last_name","Johns");
 
@@ -144,7 +144,7 @@ foreach($results as $result){
 
 Static. Returns all of the primary keys from a given database table.
 
-### Example
+#### Example
 ```
 $results = Person::getAll(Person::DB,Person::TABLE,Person::PRIMARYKEY);
 
@@ -157,7 +157,7 @@ foreach($results as $result){
 
 Static. Returns primary keys of recently created records. Assumes primary keys are sequential.
 
-### Example
+#### Example
 ```
 $results = Person::getRecent(Person::DB,Person::TABLE,Person::PRIMARYKEY,10);
 
@@ -170,7 +170,7 @@ foreach($results as $result){
 
 Static. Returns distinct values from a database table column, $key.
 
-### Example
+#### Example
 ```
 print_r(Person::browse(Person::DB,Person::TABLE,'favorite_color'));
 ```
@@ -179,7 +179,7 @@ print_r(Person::browse(Person::DB,Person::TABLE,'favorite_color'));
 
 Static. Returns the total number of records in a database table.
 
-### Example
+#### Example
 ```
 print_r(Person::count(Person::DB,Person::TABLE));
 ```
@@ -188,7 +188,7 @@ print_r(Person::count(Person::DB,Person::TABLE));
 
 Static. Performs a basic group by. Returns an associative array with keys corresponding to the values in column $key and values corresponding to the total number of records containing those keys.
 
-### Example
+#### Example
 ```
 print_r(Person::count(Person::DB,Person::TABLE,'favorite_color'));
 ```
