@@ -2,7 +2,7 @@
 
 Record is an extension of <a href="https://github.com/outlawdesigns-io/Db">Db</a>.
 
-Db cleans and wraps queries while Record provides an abstract class that can be extended to represent generic database records.
+Db builds and executes queries while Record provides an abstract class that can be extended to represent generic database records.
 
 ## Requirements
 
@@ -167,5 +167,28 @@ foreach($results as $result){
 ```
 
 ### browse($db:string,$table:string,$key:string)
+
+Static. Returns distinct values from a database table column, $key.
+
+### Example
+```
+print_r(Person::browse(Person::DB,Person::TABLE,'favorite_color'));
+```
+
 ### count($db:string,$table:string)
+
+Static. Returns the total number of records in a database table.
+
+### Example
+```
+print_r(Person::count(Person::DB,Person::TABLE));
+```
+
 ### countOf($db:string,$table:string,$key:string)
+
+Static. Performs a basic group by. Returns an associative array with keys corresponding to the values in column $key and values corresponding to the total number of records containing those keys.
+
+### Example
+```
+print_r(Person::count(Person::DB,Person::TABLE,'favorite_color'));
+```
