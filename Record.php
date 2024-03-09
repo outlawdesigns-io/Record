@@ -137,7 +137,7 @@ abstract class Record implements RecordBehavior{
       $string = preg_replace("/\\\\/","\\\\\\",$string);
       return $string;
     }
-    public static function search($db,$table,$primaryKey,$key,$value){
+    protected static function _search($db,$table,$primaryKey,$key,$value){
         $data = array();
         $results = $GLOBALS['db']
             ->database($db)
@@ -150,7 +150,7 @@ abstract class Record implements RecordBehavior{
         }
         return $data;
     }
-    public static function getAll($db,$table,$primaryKey){
+    protected static function _getAll($db,$table,$primaryKey){
         $data = array();
         $results = $GLOBALS['db']
             ->database($db)
@@ -162,7 +162,7 @@ abstract class Record implements RecordBehavior{
         }
         return $data;
     }
-    public static function getRecent($db,$table,$primaryKey,$limit){
+    protected static function _getRecent($db,$table,$primaryKey,$limit){
         $data = array();
         $results = $GLOBALS['db']
             ->database($db)
@@ -175,7 +175,7 @@ abstract class Record implements RecordBehavior{
         }
         return $data;
     }
-    public static function browse($db,$table,$key){
+    protected static function _browse($db,$table,$key){
         $data = array();
         $results = $GLOBALS['db']
             ->database($db)
@@ -187,7 +187,7 @@ abstract class Record implements RecordBehavior{
         }
         return $data;
     }
-    public static function count($db,$table){
+    protected static function _count($db,$table){
         $data = array();
         $results = $GLOBALS['db']
             ->database($db)
@@ -199,7 +199,7 @@ abstract class Record implements RecordBehavior{
         }
         return $data;
     }
-    public static function countOf($db,$table,$key){
+    protected static function _countOf($db,$table,$key){
         $data = array();
         $results = $GLOBALS['db']
             ->database($db)
