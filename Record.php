@@ -137,26 +137,32 @@ abstract class Record implements RecordBehavior{
       $string = preg_replace("/\\\\/","\\\\\\",$string);
       return $string;
     }
-    protected static function _search($db,$table,$primaryKey,$key,$value){
+    protected static function _search($db,$table,$primaryKey,$key,$value, $limit = null, $offset = null){
         $data = array();
-        $results = $GLOBALS['db']
+        $GLOBALS['db']
             ->database($db)
             ->table($table)
             ->select($primaryKey)
-            ->where($key,"like","'%" . self::cleanString($value) . "%'")
-            ->get();
+            ->where($key,"like","'%" . self::cleanString($value) . "%'");
+        if(!is_null($limit) && !is_null($offset)){
+          $GLOBALS['db']->limit($limit)->offset($offset);
+        }
+        $results = $GLOBALS['db']->get();
         while($row = mysqli_fetch_assoc($results)){
             $data[] = $row[$primaryKey];
         }
         return $data;
     }
-    protected static function _getAll($db,$table,$primaryKey){
+    protected static function _getAll($db,$table,$primaryKey, $limit = null, $offset = null){
         $data = array();
-        $results = $GLOBALS['db']
+        $GLOBALS['db']
             ->database($db)
             ->table($table)
-            ->select($primaryKey)
-            ->get();
+            ->select($primaryKey);
+        if(!is_null($limit) && !is_null($offset)){
+          $GLOBALS['db']->limit($limit)->offset($offset);
+        }
+        $results = $GLOBALS['db']->get();
         while($row = mysqli_fetch_assoc($results)){
             $data[] = $row[$primaryKey];
         }
@@ -168,7 +174,8 @@ abstract class Record implements RecordBehavior{
             ->database($db)
             ->table($table)
             ->select($primaryKey)
-            ->orderBy($primaryKey . " desc limit " . $limit)
+            ->orderBy($primaryKey . " desc")
+            ->limit($limit)
             ->get();
         while($row = mysqli_fetch_assoc($results)){
             $data[] = $row[$primaryKey];
@@ -209,6 +216,20 @@ abstract class Record implements RecordBehavior{
             ->get();
         while($row = mysqli_fetch_assoc($results)){
             $data[] = $row;
+        }
+        return $data;
+    }
+    protected static function _paginate($db,$table,$primaryKey,$limit,$offset){
+        $data = array();
+        $results = $GLOBALS['db']
+            ->database($db)
+            ->table($table)
+            ->select($primaryKey)
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+        while($row = mysqli_fetch_assoc($results)){
+            $data[] = $row[$primaryKey];
         }
         return $data;
     }
